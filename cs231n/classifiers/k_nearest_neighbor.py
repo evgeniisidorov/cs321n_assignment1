@@ -65,16 +65,7 @@ class KNearestNeighbor(object):
     dists = np.zeros((num_test, num_train))
     for i in range(num_test):
       for j in range(num_train):
-        #####################################################################
-        # TODO:                                                             #
-        # Compute the l2 distance between the ith test point and the jth    #
-        # training point, and store the result in dists[i, j]. You should   #
-        # not use a loop over dimension.                                    #
-        #####################################################################
-        pass
-        #####################################################################
-        #                       END OF YOUR CODE                            #
-        #####################################################################
+        dists[i, j] = np.sqrt(np.sum(np.square(self.X_train[j,:] - X[i,:]), axis = 0))
     return dists
 
   def compute_distances_one_loop(self, X):
@@ -145,7 +136,7 @@ class KNearestNeighbor(object):
     for i in range(num_test):
       # A list of length k storing the labels of the k nearest neighbors to
       # the ith test point.
-      closest_y = []
+      closest_y = self.y_train[np.argsort(dists[i,:])[:k]]
       #########################################################################
       # TODO:                                                                 #
       # Use the distance matrix to find the k nearest neighbors of the ith    #
@@ -154,6 +145,7 @@ class KNearestNeighbor(object):
       # Hint: Look up the function numpy.argsort.                             #
       #########################################################################
       pass
+      y_pred[i] = closest_y[0]
       #########################################################################
       # TODO:                                                                 #
       # Now that you have found the labels of the k nearest neighbors, you    #
